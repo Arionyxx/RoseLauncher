@@ -79,7 +79,7 @@ struct DownloadQueuedPayload {
     destination: String,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 struct DownloadProgressEvent {
     id: String,
@@ -88,7 +88,7 @@ struct DownloadProgressEvent {
     total: Option<u64>,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 struct DownloadCompleteEvent {
     id: String,
@@ -96,7 +96,7 @@ struct DownloadCompleteEvent {
     destination: String,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 struct DownloadErrorEvent {
     id: String,
@@ -166,12 +166,14 @@ fn remove_game(app: AppHandle, id: String) -> Result<(), String> {
 
 #[tauri::command]
 fn open_path(app: AppHandle, path: String) -> Result<(), String> {
-    let resolved = PathBuf::from(path.clone());
+    let resolved = PathBuf::from(&path);
     if !resolved.exists() {
         return Err(format!("Path does not exist: {path}"));
     }
 
-    tauri::api::shell::open(&app.shell_scope(), resolved, None)
+    let path_string = resolved.to_string_lossy().to_string();
+
+    tauri::api::shell::open(&app.shell_scope(), path_string, None)
         .map_err(|error| format!("Failed to open path: {error}"))
 }
 
@@ -445,12 +447,16 @@ fn compute_path_size(path: &Path) -> Result<u64> {
 }
 
 fn normalize_tags(tags: Vec<String>) -> Vec<String> {
-    let mut parsed: Vec<String> = tags
-        .into_iter()
-        .flat_map(|tag| tag.split(','))
-        .map(|tag| tag.trim().to_string())
-        .filter(|tag| !tag.is_empty())
-        .collect();
+    let mut parsed: Vec<String> = Vec::new();
+
+    for tag in tags {
+        for value in tag.split(',') {
+            let trimmed = value.trim();
+            if !trimmed.is_empty() {
+                parsed.push(trimmed.to_string());
+            }
+        }
+    }
 
     parsed.sort();
     parsed.dedup();
