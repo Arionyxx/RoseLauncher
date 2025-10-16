@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap');
+
+:root {
+  color-scheme: dark;
+  --cp-base: #1e1e2e;
+  --cp-mantle: #181825;
+  --cp-crust: #11111b;
+  --cp-text: #cdd6f4;
+  --cp-subtext0: #a6adc8;
+  --cp-subtext1: #bac2de;
+  --cp-overlay0: #6c7086;
+  --cp-surface0: #313244;
+  --cp-surface1: #45475a;
+  --cp-surface2: #585b70;
+  --cp-lavender: #b4befe;
+  --cp-rosewater: #f5e0dc;
+  --cp-flamingo: #f2cdcd;
+  --cp-pink: #f5c2e7;
+  --cp-mauve: #cba6f7;
+  --cp-red: #f38ba8;
+  --cp-peach: #fab387;
+  --cp-yellow: #f9e2af;
+  --cp-green: #a6e3a1;
+  --cp-teal: #94e2d5;
+  --cp-blue: #89b4fa;
+  --cp-sky: #89dceb;
+  --cp-sapphire: #74c7ec;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Onest', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: radial-gradient(120% 120% at 20% 20%, rgba(203, 166, 247, 0.1) 0%, transparent 60%),
+    radial-gradient(110% 110% at 80% 10%, rgba(148, 226, 213, 0.1) 0%, transparent 55%),
+    var(--cp-base);
+  color: var(--cp-text);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(203, 166, 247, 0.75), rgba(148, 226, 213, 0.65));
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(17, 17, 27, 0.5);
+  border-radius: 8px;
+}
