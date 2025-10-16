@@ -20,7 +20,8 @@
       }
     },
     "bundle": {
-      "active": true
+      "active": true,
+      "identifier": "com.roselauncher.app"
     },
     "windows": [
       {
